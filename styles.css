@@ -1,0 +1,76 @@
+.lift-door {
+    border: 1px solid white;
+    display: flex;
+    background-color: cornflowerblue;
+    width: 100%;
+    height: 97%;
+  }
+
+  .lift {
+    float: left;
+    width: 5rem;
+    border: 2px solid black;
+    display: flex;
+    margin: 4px;
+  }
+  .floor-container {
+    top: 0px;
+    margin: 0px;
+    padding: 0px 2px 2px 3px;
+    border-width: 2px;
+    border-bottom-width: 2px;
+    border-bottom-color: black;
+    width: 100%;
+    border-bottom-style: solid;
+    height: 100px;
+    display: flex;
+    margin-top: auto;
+  }
+  .floors-section {
+    height: 1000px;
+    flex-direction: column;
+    display: flex;
+    padding: 3em 2em;
+}
+
+  .buttons {
+    width: 15%;
+    padding: 1em;
+    align-items: center;
+  }
+  .floor {
+    float: right;
+    width: 15%;
+    position: relative;
+    align-items: center;
+    display: flex;
+  }
+  .cabin-section ,  .cabin-section-ground{
+    float: left;
+    width: 70%;
+    height: 100%;
+    display: flex;
+  }
+
+  .form-section{
+    padding: 2em;
+    text-align: center;
+  }
+
+  .submit-button{
+    width: 10rem;
+    margin: 1rem;
+    padding: 10px;
+    border-radius: 3px;
+    background-color: rgb(189, 173, 167);
+    cursor: pointer;
+  }
+
+  .inputFloor {
+    width: 10rem;
+  }
+
+  .inputLift {
+    width: 10rem;
+    margin: 1rem;
+  }

@@ -29,7 +29,6 @@
     margin-top: auto;
   }
   .floors-section {
-    height: 1000px;
     flex-direction: column;
     display: flex;
     padding: 3em 2em;
@@ -39,6 +38,7 @@
     width: 15%;
     padding: 1em;
     align-items: center;
+
   }
   .floor {
     float: right;
@@ -69,10 +69,10 @@
   }
 
   .inputFloor {
-    width: 10rem;
+    width: 12rem;
   }
 
   .inputLift {
-    width: 10rem;
+    width: 12rem;
     margin: 1rem;
   }

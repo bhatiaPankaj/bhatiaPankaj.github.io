@@ -1,3 +1,5 @@
+let liftCallsQueue = []
+
 function createSection(form) {
   var el = document.getElementById('floors-section')
   el.innerHTML = ``
@@ -24,17 +26,19 @@ function createSection(form) {
   else if (lifts < 1) {
     alert('Please Enter valid lift input (must be >0)')
   }
+  liftCallsQueue = []
 }
 
-let liftCallsQueue = []
 function liftButtonClicked(elem) {
   var callFromFloor = elem.parentNode.parentNode.id;
   var destFloor = callFromFloor.substring(6);
-  if(this.lifts.filter(x => x.destinationFloor==destFloor).length<1){
+
+  if(this.lifts.filter(x => x.destinationFloor==destFloor).length<1){   // lift neither on same floor nor moving towards it
     startSimulation(destFloor);
   }
-  else if (this.lifts.filter(x => x.currentFloor==destFloor )){
-    doorTransition(lifts.filter(x => x.currentFloor == destFloor)[0].liftNumber)
+
+  else if (this.lifts.filter(x => (x.currentFloor==destFloor && x.state == LiftState.STATIONARY) ).length > 0  ){   // lift. current floor = on same floor
+    doorTransition(lifts.filter(x => (x.currentFloor == destFloor  && x.state == LiftState.STATIONARY) )[0].liftNumber)
   }
 }
 
@@ -45,7 +49,10 @@ function startSimulation(destFloor) {
       moveBestLiftToFloor(destFloor, bestLift.liftNumber)
     }
     else {
-      if(liftCallsQueue.indexOf(destFloor !=-1)){
+      console.log(liftCallsQueue)
+      console.log(liftCallsQueue.indexOf(destFloor))
+      if(liftCallsQueue.indexOf(destFloor) == -1){
+        console.log(liftCallsQueue)
         liftCallsQueue.push(destFloor)
       }
     }
@@ -75,6 +82,7 @@ function moveBestLiftToFloor(destFloor, lift) {
   var distance = Math.abs(destFloor - this.lifts[lift - 1].currentFloor)
   document.getElementById(`lift#${lift}`).style.transform = `translateY(-${height * (destFloor - 1)}px)`;
   this.lifts[lift - 1].state = LiftState.MOVING
+  // this.lifts[lift - 1].currentFloor = -1   // Setting the current floor = -1 when a lift is moving
   this.lifts[lift - 1].destinationFloor = destFloor
   document.getElementById(`lift#${lift}`).style.transition = `all ${distance * 2}s ease-in`;
   var timeTaken = distance * 2 * 1000
@@ -89,7 +97,7 @@ function doorTransition(lift) {
   var el = document.getElementById(`lift#${lift}`)
   var leftDoor = el.children[0]
   var rightDoor = el.children[1]
-
+  this.lifts[lift - 1].state = LiftState.MOVING
   leftDoor.style.width = 0 + "px";
   rightDoor.style.width = 0 + "px";
 
@@ -186,6 +194,30 @@ class Lift {
     this.liftNumber = liftNumber;
   }
 }
+
+
+// single lift
+//Click Ground   door must openn and close
+// click level 5 up => Lift closest must reach there
+// click 5 multiple times => Just one lift must reach there
+// click 5 while a lift is already there at same floor
+// click 5 while a lift is opening
+// click 5 while a lift is closing
+
+// no of lifts  =1
+//  no of lifts = 2
+//  no pf lifts = 3
+//  no pf lifts = 10
+//  no pf lifts = 30
+// and lifts and floor alignment must not faulter
+// check mobile view
+
+// multiple lifts
+// click same floor (5) multiple times  ==>  just one lift must reach there
+// click multiple floors parallely ==> check for 2 second speed
+// click a button while lift1 is moving towards destination
+// click a button while lift1 is opening at its dest floor
+// click a button while lift1 is closing at its dest floor
 
 
 
